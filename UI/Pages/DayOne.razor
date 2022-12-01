@@ -1,0 +1,25 @@
+﻿@page "/"
+
+@using Solutions.DayOne
+
+<PageTitle>Day One</PageTitle>
+
+<h1>Day One</h1>
+<p>Top Elf: @TopElf</p>
+<p>Top Three Elves: @TopThree</p>
+
+@code
+{
+    public int TopElf { get; set; }
+    public int TopThree { get; set; }
+
+    protected override void OnInitialized()
+    {
+        var input = File.ReadAllLines(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "input", "dayone", "input.txt"));
+        var cpe = Answer.GetCaloriesPerElf(input);
+        
+        TopElf = cpe.Max();
+        TopThree = cpe.OrderByDescending(e => e).Take(3).Sum();
+        base.OnInitialized();
+    }
+}
